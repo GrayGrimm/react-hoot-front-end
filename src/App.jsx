@@ -33,9 +33,10 @@ const App = () => {
   }, [user]);
 
   const handeAddHoot = async (hootFormData) => {
-    console.log('hootFormData', hootFormData);
+    const newHoot = await hootService.create(hootFormData);
+    setHoots([newHoot, ...hoots]);
     navigate('/hoots');
-  }
+  };
 
   return (
     <>
