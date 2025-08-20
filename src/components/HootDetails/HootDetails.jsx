@@ -1,5 +1,7 @@
 import { useParams } from 'react-router';
 import { useState, useEffect } from 'react';
+import CommentForm from '../CommentForm/CommentForm';
+
 
 import * as hootService from '../../services/hootService';
 
@@ -16,6 +18,11 @@ const HootDetails = () => {
         };
         fetchHoot();
     }, [hootId]);
+
+    const handleAddComment = async (commentFormData) => {
+        const newComment = await hootService.createComment(hootId, commentFormData);
+        setHoot({...hoot, comments: [...hoot.comments, newComment]})
+    }
 
     if (!hoot) return <main>Loading...</main>;
 
@@ -34,6 +41,7 @@ const HootDetails = () => {
             </section>
             <section>
                 <h2>Comments</h2>
+                <CommentForm handleAddComment={handleAddComment} />
                 {!hoot.comments.length && <p>There are no comments.</p>}
 
                 {hoot.comments.map((comment) => (
