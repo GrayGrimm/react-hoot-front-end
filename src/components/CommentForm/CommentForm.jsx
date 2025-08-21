@@ -2,6 +2,7 @@
 import { useState } from 'react';
 
 const CommentForm = ({ handleAddComment }) => {
+
   const [formData, setFormData] = useState({ text: '' });
 
   const handleChange = (evt) => {

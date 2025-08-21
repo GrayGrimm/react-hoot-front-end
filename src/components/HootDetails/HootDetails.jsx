@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { useParams, Link } from 'react-router';
 import { useState, useEffect, useContext } from 'react';
 import CommentForm from '../CommentForm/CommentForm';
 
@@ -42,7 +42,8 @@ const HootDetails = ({ handleDeleteHoot }) => {
 
                     {hoot.author._id === user._id && (
                         <>
-                        <button onClick={() => handleDeleteHoot(hootId)}>Delete</button>
+                            <Link to={`/hoots/${hootId}/edit`}>Edit</Link>
+                            <button onClick={() => handleDeleteHoot(hootId)}>Delete</button>
                         </>
                     )}
                 </header>
