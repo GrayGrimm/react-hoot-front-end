@@ -38,6 +38,12 @@ const App = () => {
     navigate('/hoots');
   };
 
+  const handleDeleteHoot = async (hootId) => {
+    const deletedHoot = await hootService.deleteHoot(hootId);
+    setHoots(hoots.filter((hoot) => deletedHoot._id !== hoot._id));
+    navigate('/hoots');
+  };
+
   return (
     <>
       <NavBar />
@@ -46,11 +52,11 @@ const App = () => {
         {user ? (
           <>
             <Route path='/hoots' element={<HootList hoots={hoots} />} />
-            <Route 
-            path='/hoots/:hootId'
-            element={ <HootDetails />}
+            <Route
+              path='/hoots/:hootId'
+              element={<HootDetails handleDeleteHoot={handleDeleteHoot} />}
             />
-            <Route path='/hoots/new' element={ <HootForm handeAddHoot={handeAddHoot}/> } />
+            <Route path='/hoots/new' element={<HootForm handeAddHoot={handeAddHoot} />} />
           </>
         ) : (
           <>
