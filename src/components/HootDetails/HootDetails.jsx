@@ -25,6 +25,14 @@ const HootDetails = ({ handleDeleteHoot }) => {
     const handleAddComment = async (commentFormData) => {
         const newComment = await hootService.createComment(hootId, commentFormData);
         setHoot({ ...hoot, comments: [...hoot.comments, newComment] })
+    };
+
+    const handleDeleteComment = async (commentId) => {
+        await hootService.deleteComment(hootId, commentId);
+        setHoot({
+            ...hoot,
+            comments: hoot.comments.filter((comment) => comment._id !== commentId)
+        })
     }
 
     if (!hoot) return <main>Loading...</main>;
@@ -59,8 +67,16 @@ const HootDetails = ({ handleDeleteHoot }) => {
                         <header>
                             <p>
                                 {`${comment.author.username} posted on
-                ${new Date(comment.createdAt).toLocaleDateString()}`}
+                                ${new Date(comment.createdAt).toLocaleDateString()}`}
                             </p>
+                            {comment.author._id === user._id && (
+                                <>
+                                    <Link to={`/hoots`} >Edit</Link>
+                                    <button onClick={() => handleDeleteComment(comment._id)}>
+                                        Delete Comment
+                                    </button>
+                                </>
+                            )}
                         </header>
                         <p>{comment.text}</p>
                     </article>
